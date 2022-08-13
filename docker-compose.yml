@@ -6,7 +6,7 @@ services :
         context: ./docker-app/
         dockerfile: Dockerfile
     volumes:
-        - ./server:/var/www/server
+        - ./server:/var/www/html/server
     ports:
         - '8081:80'
     links:

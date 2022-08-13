@@ -15,3 +15,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # mods rewrite の有効か
 RUN a2enmod rewrite
+RUN chown -R www-data:www-data /var/www/html
