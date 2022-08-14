@@ -2,22 +2,22 @@
 
 namespace App\modules\graphql\entities;
 
-final class User 
+final class Prefecture
 {
     private int $id;
 
     private string $name;
 
-    private int $prefectureId;
+    private string $enName;
 
-    public function __construct(int $id, string $name, int $prefectureId)
+    public function __construct(int $id, string $name, string $enName)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->prefectureId = $prefectureId;
+        $this->enName = $enName;
     }
 
-    public function getId(): int 
+    public function getId(): int
     {
         return $this->id;
     }
@@ -27,8 +27,8 @@ final class User
         return $this->name;
     }
 
-    public function getPrefectureId(): int
+    public function getEnName(): string
     {
-        return $this->prefectureId;
+        return $this->enName;
     }
 }

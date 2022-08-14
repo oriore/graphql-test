@@ -30,7 +30,7 @@ final class Definition
             'name' => 'Query',
             'fields' => [
                 'user' => User::get(),
-                'users' => Users::get(),
+                'users' => User::getAll(),
             ],
             'resolveField' => function($value, $args, $context, ResolveInfo $info) {
                 switch($info->fieldName) {
