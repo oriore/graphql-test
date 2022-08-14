@@ -14,6 +14,6 @@ $app->get('/', function (Request $request, Response $response, $args) {
     return $response;
 });
 
-$app->get('/graphql', GraphqlController::class . ':index');
+$app->any('/graphql', GraphqlController::class . ':index');
 
 $app->run();

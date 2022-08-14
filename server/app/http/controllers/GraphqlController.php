@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\modules\graphql\schema\Definition;
+use GraphQL\GraphQL;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -16,8 +18,13 @@ class GraphqlController
      */
     public function index(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $result = ['hogehoge' => 'fugafuga'];
-        $response->getBody()->write(json_encode($result));
+        $schema = (new Definition())->getSchema();
+        $input = json_decode((string) $request->getBody(), true);
+        $query = isset($input['query']) ? $input['query'] : null;
+        $result = GraphQL::executeQuery($schema, $query);
+        $response->getBody()->write(
+            json_encode($result->toArray())
+        );
         return $response;
     }
 }
