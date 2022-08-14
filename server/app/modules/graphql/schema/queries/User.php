@@ -19,4 +19,11 @@ final class User
             ]
         ];
     }
+
+    public static function getAll(): array
+    {
+        return [
+            'type' => Type::listOf(UserType::getInstance())
+        ];
+    }
 }
