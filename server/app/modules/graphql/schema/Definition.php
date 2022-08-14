@@ -3,19 +3,21 @@
 namespace App\modules\graphql\schema;
 
 use App\modules\graphql\repositories\UserRepository;
-
+use App\modules\graphql\repositories\PrefectureRepository;
 use App\modules\graphql\schema\queries\User;
-use App\modules\graphql\schema\queries\Users;
+use App\modules\graphql\schema\queries\Prefecture;
 use GraphQL\Type\Schema;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
 
 final class Definition 
 {
-    private UserRepository $repository;
+    private UserRepository $userRepository;
+    private PrefectureRepository $prefectureRepository;
     public function __construct()
     {
-        $this->repository = new UserRepository();
+        $this->userRepository = new UserRepository();
+        $this->prefectureRepository = new PrefectureRepository();
     }
     public function getSchema(): Schema
     {
@@ -31,13 +33,19 @@ final class Definition
             'fields' => [
                 'user' => User::get(),
                 'users' => User::getAll(),
+                'prefecture' => Prefecture::get(),
+                'prefectures' => Prefecture::getAll(),
             ],
             'resolveField' => function($value, $args, $context, ResolveInfo $info) {
                 switch($info->fieldName) {
                     case 'users':
-                        return $this->repository->getAll();
+                        return $this->userRepository->getAll();
                     case 'user':
-                        return $this->repository->getbyId($args['id']);
+                        return $this->userRepository->getbyId($args['id']);
+                    case 'prefecture':
+                        return $this->prefectureRepository->getbyId($args['id']);
+                    case 'prefectures':
+                        return $this->prefectureRepository->getAll();
                 }
 
                 throw new \RuntimeException('query not found');
