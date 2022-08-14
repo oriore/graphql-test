@@ -8,13 +8,13 @@ final class User
 
     private string $name;
 
-    private int $prefectureId;
+    private string $autonomyId;
 
-    public function __construct(int $id, string $name, int $prefectureId)
+    public function __construct(int $id, string $name, string $autonomyId)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->prefectureId = $prefectureId;
+        $this->autonomyId = $autonomyId;
     }
 
     public function getId(): int 
@@ -27,8 +27,8 @@ final class User
         return $this->name;
     }
 
-    public function getPrefectureId(): int
+    public function getAutonomyId(): string
     {
-        return $this->prefectureId;
+        return $this->autonomyId;
     }
 }

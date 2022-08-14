@@ -7,15 +7,15 @@ use App\modules\graphql\entities\User;
 final class UserRepository
 {
     private Const DATA = [
-        ['id' => 1, 'name' => 'test1', 'prefectureId' => 12],
-        ['id' => 2, 'name' => 'test2', 'prefectureId' => 13],
-        ['id' => 3, 'name' => 'test3', 'prefectureId' => 14],
+        ['id' => 1, 'name' => 'test1', 'autonomyId' => '13101'],
+        ['id' => 2, 'name' => 'test2', 'autonomyId' => '12204'],
+        ['id' => 3, 'name' => 'test3', 'autonomyId' => '14102'],
     ];
 
     public function getAll(): array
     {
         return array_map(
-            fn($data) => new User($data['id'], $data['name'], $data['prefectureId']),
+            fn($data) => new User($data['id'], $data['name'], $data['autonomyId']),
             self::DATA
         );
     }
@@ -24,7 +24,7 @@ final class UserRepository
     {
         foreach(self::DATA as $data) {
             if ($data['id'] === $id) {
-                return new User($data['id'], $data['name'], $data['prefectureId']);
+                return new User($data['id'], $data['name'], $data['autonomyId']);
             }
         }
 

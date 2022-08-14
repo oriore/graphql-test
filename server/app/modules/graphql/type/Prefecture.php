@@ -3,6 +3,7 @@
 namespace App\modules\graphql\type;
 
 use App\modules\graphql\entities\Prefecture as PrefectureEntity;
+use App\modules\graphql\repositories\AutonomyRepository;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
