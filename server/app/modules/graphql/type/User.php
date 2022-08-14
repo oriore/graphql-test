@@ -8,6 +8,8 @@ use GraphQL\Type\Definition\Type;
 
 class User extends ObjectType
 {
+    private static $instance;
+
     public function __construct()
     {
         $config = [
@@ -27,5 +29,14 @@ class User extends ObjectType
         ];
         
         parent::__construct($config);
+    }
+
+    public static function getInstance(): self
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 }

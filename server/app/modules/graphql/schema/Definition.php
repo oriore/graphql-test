@@ -3,12 +3,12 @@
 namespace App\modules\graphql\schema;
 
 use App\modules\graphql\repositories\UserRepository;
-use App\modules\graphql\type\User;
+
+use App\modules\graphql\schema\queries\User;
+use App\modules\graphql\schema\queries\Users;
 use GraphQL\Type\Schema;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQL\Type\Definition\Type;
-
 
 final class Definition 
 {
@@ -26,22 +26,11 @@ final class Definition
 
     private function getQuery(): ObjectType
     {
-        $user = new User();
         return new ObjectType([
             'name' => 'Query',
             'fields' => [
-                'user' => [
-                    'type' => $user,
-                    'args' => [
-                        'id' => [
-                            'type' => Type::int(),
-                            'description' => 'Get User Id'
-                        ],
-                    ]
-                ],
-                'users' => [
-                    'type' => Type::listOf($user)
-                ],
+                'user' => User::get(),
+                'users' => Users::get(),
             ],
             'resolveField' => function($value, $args, $context, ResolveInfo $info) {
                 switch($info->fieldName) {
