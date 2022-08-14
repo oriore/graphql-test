@@ -3,6 +3,9 @@ FROM php:8.1.8-apache
 # copy config file
 COPY ./php/php.ini /usr/local/etc/php/
 COPY ./apache/*.conf /etc/apache2/sites-enabled/
+COPY ./init.sh /var/www/html
+
+RUN chmod 755 /var/www/html/init.sh
 
 # module install
 RUN apt-get update\

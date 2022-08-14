@@ -7,6 +7,7 @@ services :
         dockerfile: Dockerfile
     volumes:
         - ./server:/var/www/html/server
+    command: sh -c "/var/www/html/init.sh && apache2-foreground"
     ports:
         - '8081:80'
     links:
