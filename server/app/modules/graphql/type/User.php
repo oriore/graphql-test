@@ -3,7 +3,7 @@
 namespace App\modules\graphql\type;
 
 use App\modules\graphql\entities\User as UserEntity;
-use App\modules\graphql\repositories\AutonomyRepository;
+use App\modules\graphql\repositories\{ AutonomyRepository, ItemRepository };
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
@@ -12,9 +12,13 @@ class User extends ObjectType
     private static $instance;
 
     private AutonomyRepository $autonomyRepository;
+
+    private ItemRepository $itemRepository;
+
     public function __construct()
     {
         $this->autonomyRepository = new AutonomyRepository();
+        $this->itemRepository = new ItemRepository();
 
         $config = [
             'name' => 'User',
@@ -38,7 +42,18 @@ class User extends ObjectType
                     'type' => Autonomy::getInstance(),
                     'description' => 'Belong Autonomy',
                     'resolve' => fn(UserEntity $user) => $this->autonomyRepository->getById($user->getAutonomyId()),
-                ]
+                ],
+                'items' => [
+                    'type' => Type::listOf(Item::getInstance()),
+                    'description' => 'has Item',
+                    'args' => [
+                        'itemIds' => [
+                            'type' => Type::listOf(Type::int()),
+                            'description' => 'Get item ids'
+                        ],
+                    ],
+                    'resolve' => fn(UserEntity $user, array $args) => $this->itemRepository->getByUserId($user->getId(), $args['itemIds'] ?? []),
+                ],
             ],
         ];
 
